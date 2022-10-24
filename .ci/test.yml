@@ -1,0 +1,24 @@
+---
+- name: Test PHP role
+  hosts: all
+  gather_facts: true
+
+  vars:
+    - ansible_python_interpreter: /usr/bin/python3
+    - ansible_user: vagrant
+    - ansible_ssh_private_key_file: "{{playbook_dir}}/../vagrant.private"
+    - ansible_become: true
+
+  tasks:
+    - name: install packages
+      apt:
+        pkg:
+          - htop
+        update_cache: yes
+        install_recommends: yes
+        state: present
+
+    - name: check htop binary exists
+      shell: htop --version
+      register: htop_binary
+      failed_when: htop_binary.rc != 0
