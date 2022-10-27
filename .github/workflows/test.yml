@@ -1,0 +1,32 @@
+name: Test
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    name: Test Vagrant + Ansible
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install packages
+        run: |
+          sudo apt update
+          sudo apt install -y vagrant ansible
+
+      - name: Setup vagrant
+        run: |
+          vagrant up --provider=docker
+          chmod 0600 vagrant.private
+
+      - name: Setup ansible
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: false
+        run: |
+          cd .tests
+          ansible-playbook -i hosts.yml test.yml
