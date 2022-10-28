@@ -20,7 +20,10 @@
 
 ```ruby
 Vagrant.configure(2) do |config|
-  config.vm.box = "dockette/vagrant:debian-11"
+	config.vm.provider "docker" do |d|
+		d.image = "dockette/vagrant:debian-11"
+		d.has_ssh = true
+	end
 end
 ```
 
@@ -28,11 +31,11 @@ end
 
 ```ruby
 Vagrant.configure(2) do |config|
-  config.vm.provider "docker" do |d|
-  config.vm.box = "dockette/vagrant:debian-11"
-    d.has_ssh = true
-  end
-  config.vm.provision "shell", inline: "apt install -y htop"
+	config.vm.provider "docker" do |d|
+		d.image = "dockette/vagrant:debian-11"
+		d.has_ssh = true
+	end
+	config.vm.provision "shell", inline: "apt install -y htop"
 end
 ```
 
