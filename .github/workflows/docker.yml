@@ -15,7 +15,9 @@ jobs:
         include:
           # Debian
           - image: "debian-11"
+          - image: "debian-11-systemd"
           - image: "debian-10"
+          - image: "debian-10-systemd"
 
       fail-fast: false
 
