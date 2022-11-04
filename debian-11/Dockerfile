@@ -13,6 +13,10 @@ RUN apt update && apt dist-upgrade -y && \
         curl \
         locales \
         lsb-release \
+        git \
+        mc \
+        htop \
+        nano \
         openssh-server \
         python3 \
         sudo \
