@@ -11,6 +11,7 @@ RUN apt update && apt dist-upgrade -y && \
         apt-transport-https \
         ca-certificates \
         curl \
+        cron \
         locales \
         lsb-release \
         git \
@@ -48,4 +49,5 @@ RUN apt update && apt dist-upgrade -y && \
 WORKDIR /srv
 
 EXPOSE 22
+
 CMD ["/usr/sbin/sshd","-D"]

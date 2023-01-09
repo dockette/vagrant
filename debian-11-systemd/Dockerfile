@@ -11,6 +11,7 @@ RUN apt update && apt dist-upgrade -y && \
         apt-transport-https \
         ca-certificates \
         curl \
+        cron \
         locales \
         lsb-release \
         git \
@@ -41,7 +42,7 @@ RUN apt update && apt dist-upgrade -y && \
     rm -f /lib/systemd/system/anaconda.target.wants/*  && \
     ln -s /lib/systemd/systemd /usr/sbin/init && \
     # SSH  #####################################################################
-     mkdir -p /home/vagrant/.ssh && \
+    mkdir -p /home/vagrant/.ssh && \
     chmod 0700 /home/vagrant/.ssh && \
     wget --no-check-certificate https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub -O /home/vagrant/.ssh/authorized_keys && \
     chmod 0600 /home/vagrant/.ssh/authorized_keys && \
@@ -60,5 +61,6 @@ WORKDIR /srv
 EXPOSE 22
 
 # VOLUMES
+VOLUME ["/sys/fs/cgroup"]
 
 CMD ["/usr/sbin/init"]

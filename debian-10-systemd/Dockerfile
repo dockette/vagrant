@@ -11,6 +11,7 @@ RUN apt update && apt dist-upgrade -y && \
         apt-transport-https \
         ca-certificates \
         curl \
+        cron \
         locales \
         lsb-release \
         git \
