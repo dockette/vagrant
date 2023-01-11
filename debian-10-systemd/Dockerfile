@@ -10,16 +10,17 @@ RUN apt update && apt dist-upgrade -y && \
     apt install -y \
         apt-transport-https \
         ca-certificates \
-        curl \
         cron \
+        curl \
+        git \
+        htop \
         locales \
         lsb-release \
-        git \
         mc \
-        htop \
         nano \
         openssh-server \
         python3 \
+        rsync \
         sudo \
         unzip \
         wget && \
