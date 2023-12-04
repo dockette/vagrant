@@ -14,6 +14,8 @@ jobs:
       matrix:
         include:
           # Debian
+          - image: "debian-12"
+          - image: "debian-12-systemd"
           - image: "debian-11"
           - image: "debian-11-systemd"
           - image: "debian-10"
