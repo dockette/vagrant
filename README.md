@@ -18,6 +18,8 @@
 
 ## Usage
 
+### Vagrant
+
 ```ruby
 Vagrant.configure(2) do |config|
 	config.vm.provider "docker" do |d|
@@ -37,6 +39,18 @@ Vagrant.configure(2) do |config|
 	end
 	config.vm.provision "shell", inline: "apt install -y htop"
 end
+```
+
+### Docker
+
+```bash
+docker run \
+	-it \
+	--rm \
+	--privileged \
+	--cgroupns=host \
+	-v /sys/fs/cgroup:/sys/fs/cgroup:rw \
+	dockette/vagrant:debian-13-systemd
 ```
 
 ### Images
