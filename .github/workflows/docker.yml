@@ -18,12 +18,11 @@ jobs:
     strategy:
       matrix:
         include:
-          # Node
+          - item: "debian-13"
+          - item: "debian-13-systemd"
           - item: "debian-12"
           - item: "debian-12-systemd"
           - item: "debian-11"
           - item: "debian-11-systemd"
-          - item: "debian-10"
-          - item: "debian-10-systemd"
 
       fail-fast: false

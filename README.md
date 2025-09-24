@@ -41,6 +41,8 @@ end
 
 ### Images
 
+- `dockette/vagrant:debian-13`
+- `dockette/vagrant:debian-13-systemd`
 - `dockette/vagrant:debian-12`
 - `dockette/vagrant:debian-12-systemd`
 - `dockette/vagrant:debian-11`
