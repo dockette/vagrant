@@ -1,4 +1,5 @@
 DOCKER_IMAGE=dockette/vagrant
+DOCKER_PLATFORM?=linux/arm64
 
 .PHONY: build-all
 build-all: build-debian-13 build-debian-13-systemd build-debian-12 build-debian-12-systemd build-debian-11 build-debian-11-systemd build-debian-10 build-debian-10-systemd
@@ -31,7 +32,27 @@ _docker-build-%: VERSION=$*
 _docker-build-%:
 	docker buildx \
 		build \
-		--platform linux/arm64 \
 		--pull \
+		--platform ${DOCKER_PLATFORM} \
 		-t ${DOCKER_IMAGE}:${VERSION} \
 		./${VERSION}
+
+run-debian-12-systemd:
+	docker run \
+		-it \
+		--rm \
+		--platform ${DOCKER_PLATFORM} \
+		--privileged \
+		--cgroupns=host \
+		-v /sys/fs/cgroup:/sys/fs/cgroup:rw \
+		${DOCKER_IMAGE}:debian-12-systemd
+
+run-debian-13-systemd:
+	docker run \
+		-it \
+		--rm \
+		--platform ${DOCKER_PLATFORM} \
+		--privileged \
+		--cgroupns=host \
+		-v /sys/fs/cgroup:/sys/fs/cgroup:rw \
+		${DOCKER_IMAGE}:debian-13-systemd

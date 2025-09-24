@@ -1,6 +1,6 @@
 FROM debian:trixie
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="sulcmil@gmail.com"
 
@@ -23,7 +23,11 @@ RUN apt update && apt dist-upgrade -y && \
         rsync \
         sudo \
         unzip \
-        wget && \
+        wget \
+        systemd \
+        systemd-sysv \
+        iproute2 \
+        dbus && \
     # LOCALE ###################################################################
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen en_US.UTF-8 && \
@@ -33,15 +37,7 @@ RUN apt update && apt dist-upgrade -y && \
     echo 'vagrant ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/vagrant && \
     chmod 0440 /etc/sudoers.d/vagrant && \
     # SYSTEMD ##################################################################
-    (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-    rm -f /lib/systemd/system/multi-user.target.wants/*  && \
-    rm -f /etc/systemd/system/*.wants/*  && \
-    rm -f /lib/systemd/system/local-fs.target.wants/*  && \
-    rm -f /lib/systemd/system/sockets.target.wants/*udev*  && \
-    rm -f /lib/systemd/system/sockets.target.wants/*initctl*  && \
-    rm -f /lib/systemd/system/basic.target.wants/*  && \
-    rm -f /lib/systemd/system/anaconda.target.wants/*  && \
-    ln -s /lib/systemd/systemd /usr/sbin/init && \
+    rm -f /lib/systemd/system/multi-user.target.wants/getty.target && \
     # SSH  #####################################################################
     mkdir -p /home/vagrant/.ssh && \
     chmod 0700 /home/vagrant/.ssh && \
@@ -64,4 +60,4 @@ EXPOSE 22
 # VOLUMES
 VOLUME ["/sys/fs/cgroup"]
 
-CMD ["/usr/sbin/init"]
+CMD ["/lib/systemd/systemd"]
