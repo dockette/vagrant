@@ -1,6 +1,6 @@
 FROM debian:trixie
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="sulcmil@gmail.com"
 

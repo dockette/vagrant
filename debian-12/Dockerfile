@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="sulcmil@gmail.com"
 

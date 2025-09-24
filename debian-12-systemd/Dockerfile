@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="sulcmil@gmail.com"
 
@@ -23,7 +23,9 @@ RUN apt update && apt dist-upgrade -y && \
         rsync \
         sudo \
         unzip \
-        wget && \
+        wget \
+        systemd \
+        systemd-sysv && \
     # LOCALE ###################################################################
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen en_US.UTF-8 && \
