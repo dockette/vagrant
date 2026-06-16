@@ -12,12 +12,13 @@ permissions:
 jobs:
   build:
     name: "Build"
+    if: github.event.workflow_run.head_branch == 'master' && github.event.workflow_run.conclusion == 'success'
     uses: dockette/.github/.github/workflows/docker.yml@master
     secrets: inherit
     with:
-        image: "dockette/vagrant"
-        tag: "${{ matrix.item }}"
-        context: "${{ matrix.item }}"
+      image: "dockette/vagrant"
+      tag: "${{ matrix.item }}"
+      context: "${{ matrix.item }}"
     strategy:
       matrix:
         include:
@@ -29,3 +30,20 @@ jobs:
           - item: "debian-11-systemd"
 
       fail-fast: false
+
+  docs:
+    name: "Docs"
+    runs-on: "ubuntu-latest"
+    needs: ["build"]
+    if: github.event.workflow_run.head_branch == 'master'
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+
+      - name: "Update Docker Hub description"
+        uses: peter-evans/dockerhub-description@v5
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: "dockette/vagrant"
