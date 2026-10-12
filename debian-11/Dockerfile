@@ -5,7 +5,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 LABEL maintainer="sulcmil@gmail.com"
 
 # INSTALLATION
-RUN apt update && apt dist-upgrade -y && \
+# Debian 11 is EOL, packages moved to archive.debian.org
+RUN printf "deb http://archive.debian.org/debian bullseye main\ndeb http://archive.debian.org/debian-security bullseye-security main\n" > /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99archive && \
+    apt update && apt dist-upgrade -y && \
     # DEPENDENCIES #############################################################
     apt install -y \
         apt-transport-https \
